@@ -14,6 +14,7 @@ import Model.Person;
 import Model.Products;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
     Button addproducts;
     Button deleteproducts;
     Button viewproducts;
-
+    Button compareproducs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,17 @@ public class MainActivity extends ActionBarActivity {
         addproducts=(Button)findViewById(R.id.add);
         deleteproducts=(Button)findViewById(R.id.delete);
         viewproducts=(Button)findViewById(R.id.view);
+        compareproducs=(Button)findViewById(R.id.compare);
         // Create the Realm configuration
         realmConfig = new RealmConfiguration.Builder(this).build();
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
+        compareproducs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compare();
+            }
+        });
         addproducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +91,7 @@ viewproducts.setOnClickListener(new View.OnClickListener() {
             for (int j = 0; j < i; j++) {
                 Products products = realm.createObject(Products.class);
                 products.setName("products_" + j);
+                products.setCost(50);
                 person.getProductses().add(products);
             }
         }
@@ -107,7 +116,19 @@ viewproducts.setOnClickListener(new View.OnClickListener() {
             showStatus( "\n" + pers.getName() +":" + pers.getProductses().size());
         }
     }
+private void compare(){
 
+    RealmResults<Person>persons=realm.where(Person.class).equalTo("productses.name","products_1").equalTo("productses.cost","50").findAll();
+         /*if((persons.size())>=16){
+             realm.beginTransaction();
+             Person p2=realm.createObject(Person.class);*/
+
+             showStatus("size of product_1:"+persons.size());
+
+         //}
+
+realm.close();
+}
     @Override
     protected void onDestroy() {
         super.onDestroy();

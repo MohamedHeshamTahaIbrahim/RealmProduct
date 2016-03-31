@@ -29,6 +29,12 @@
             android:id="@+id/view"
             android:text="View"
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/compare"
+            android:text="Compare"
+            />
         <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
