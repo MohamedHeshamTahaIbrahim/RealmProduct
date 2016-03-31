@@ -118,7 +118,7 @@ viewproducts.setOnClickListener(new View.OnClickListener() {
     }
 private void compare(){
 
-    RealmResults<Person>persons=realm.where(Person.class).equalTo("productses.name","products_1").equalTo("productses.cost","50").findAll();
+    RealmResults<Person>persons=realm.where(Person.class).equalTo("productses.name","products_1").equalTo("productses.cost",50).findAll();
          /*if((persons.size())>=16){
              realm.beginTransaction();
              Person p2=realm.createObject(Person.class);*/
@@ -127,7 +127,7 @@ private void compare(){
 
          //}
 
-realm.close();
+//realm.close();
 }
     @Override
     protected void onDestroy() {
